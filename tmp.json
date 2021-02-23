@@ -1,0 +1,53 @@
+{
+  "device": {
+    "access_protocol": "userdefine",
+    "name": "led_test1",
+    "connection_type": "edge",
+    "description": "第一个led灯",
+    "attributes": {
+      "brightness": {
+        "value": "0",
+        "optional": true,
+        "metadata": {
+          "type": "int"
+        }
+      },
+      "swich": {
+        "value": "true",
+        "optional": true,
+        "metadata": {
+          "type": "boolean"
+        }
+      }
+    },
+    "twin": {
+      "brightness": {
+        "expected": {
+          "value": "0"
+        },
+        "optional": true,
+        "metadata": {
+          "type": "int"
+        }
+      },
+      "switch": {
+        "expected": {
+          "value": "false"
+        },
+        "optional": true,
+        "metadata": {
+          "type": "boolean"
+        }
+      }
+    },
+    "access_config": {
+      "protocol_name": {
+        "value": "userdefine",
+        "optional": true,
+        "metadata": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

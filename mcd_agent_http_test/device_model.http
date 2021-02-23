@@ -1,0 +1,81 @@
+POST {{mcdAgentUrl}}/device_model
+Content-Type: application/json
+
+{
+  "name": "floodlight",
+  "description": "floodlight-device",
+  "tags": {
+
+  },
+  "properties": [
+    {
+      "name": "sw",
+      "description": "灯开关",
+      "type": {
+        "int": {
+          "accessMode": "ReadWrite",
+          "defaultValue": 1,
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    }
+  ]
+}
+
+###
+POST {{mcdAgentUrl}}/device_models
+Content-Type: application/json
+
+{}
+
+###
+POST {{mcdAgentUrl}}/device_model/floodlight
+Content-Type: application/json
+
+{
+  "name": "floodlight",
+  "description": "floodlight-device",
+  "tags": {
+
+  },
+  "properties": [
+    {
+      "name": "sw",
+      "description": "灯开关",
+      "type": {
+        "boolean": {
+          "accessMode": "ReadWrite",
+          "defaultValue": true
+        }
+      }
+    }
+  ]
+}
+
+
+###
+GET {{mcdAgentUrl}}/device_model/energy-meter
+
+
+###
+GET {{mcdAgentUrl}}/device_models
+
+
+###
+DELETE {{mcdAgentUrl}}/device_model/energy-meter
+###
+
+###
+DELETE {{mcdAgentUrl}}/device_models
+Content-Type: application/json
+
+{
+
+}
+###
+
+
+GET {{mcdAgentUrl}}/export/device_models
+
+#####

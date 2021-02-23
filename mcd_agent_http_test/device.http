@@ -1,0 +1,159 @@
+###注册一个设备
+POST {{mcdAgentUrl}}/device
+Content-Type: application/json
+
+{
+  "name": "light-01",
+  "id": "1b0ac003-0888-42ea-9da8-70b083e822d5",
+  "description": "",
+  "tags": {
+
+  },
+  "deviceModelName": "floodlight",
+  "protocol": {
+    "modbus": {
+      "slaveID": 4
+    },
+    "common": {
+      "tcp": {
+        "ip": "10.229.249.215",
+        "port": 504
+      }
+    }
+  },
+  "propertyVisitors": [
+    {
+      "propertyName": "sw",
+      "collectCycle": 5000,
+      "modbus": {
+        "register": "CoilRegister",
+        "offset": 99,
+        "limit": 1,
+        "scale": 1
+      }
+    }
+  ],
+  "data": {
+    "dataProperties": [
+      {
+        "propertyName": "sw",
+        "metadata": {"uploadModel":"cycle"}
+      }
+    ],
+    "dataTopic": "megvii/raw/device/data/update/floodlight"
+  },
+  "node": "edgenode-emb-h110b",
+  "twins": [
+    {
+      "propertyName": "sw",
+      "desired": {
+        "value": "1"
+      }
+    }
+  ]
+}
+
+
+###批量注册设备
+POST {{mcdAgentUrl}}/devices
+Content-Type: application/json
+
+{}
+
+###更新一个设备
+POST {{mcdAgentUrl}}/device/light-01
+Content-Type: application/json
+
+{
+  "name": "light-01",
+  "description": "",
+  "tags": {
+
+  },
+  "deviceModelName": "floodlight",
+  "protocol": {
+    "modbus": {
+      "slaveID": 4
+    },
+    "common": {
+      "tcp": {
+        "ip": "10.229.249.215",
+        "port": 504
+      }
+    }
+  },
+  "propertyVisitors": [
+    {
+      "propertyName": "sw",
+      "collectCycle": 5000,
+      "modbus": {
+        "register": "CoilRegister",
+        "offset": 99,
+        "limit": 1,
+        "scale": 1
+      }
+    }
+  ],
+  "data": {
+    "dataProperties": [
+      {
+        "propertyName": "sw",
+        "metadata": {"uploadModel":"cycle"}
+      }
+    ],
+    "dataTopic": "megvii/raw/device/data/update/floodlight"
+  },
+  "node": "edgenode-emb-h110b",
+  "twins": [
+    {
+      "propertyName": "sw",
+      "desired": {
+        "value": "true"
+      }
+    }
+  ]
+}
+###查询设备详情
+GET {{mcdAgentUrl}}/device/n1-lighting-group01-l1
+
+###查询设备列表
+GET {{mcdAgentUrl}}/devices
+
+###查询设备列表
+GET {{mcdAgentUrl}}/devices?{name=xxx,limit=xxx,offset=xxx}
+
+
+###删除边缘设备
+DELETE {{mcdAgentUrl}}/device/123
+###
+
+###删除边缘设备
+DELETE {{mcdAgentUrl}}/devices
+Content-Type: application/json
+
+{
+
+}
+
+###设备绑定某一个边缘节点
+PUT {{mcdAgentUrl}}/nodes/:node_id/devices
+
+{
+
+}
+
+###更新边缘设备孪生
+PUT {{mcdAgentUrl}}/devices/{device_id}/twin
+
+{
+
+}
+
+###查询边缘设备孪生
+GET {{mcdAgentUrl}}/devices/{device_id}/twin
+
+{
+
+}
+
+###

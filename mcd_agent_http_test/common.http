@@ -1,0 +1,10 @@
+GET {{mcdAgentUrl}}/
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "id":"999"
+}
+
+###

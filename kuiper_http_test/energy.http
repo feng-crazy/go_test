@@ -1,0 +1,78 @@
+POST {{kuiperUrl}}/streams
+Content-Type: application/json
+
+{
+  "sql": "create stream energy_stream () WITH ( datasource = \"/xuanyuan/device/energy-meter\", FORMAT = \"json\", TYPE = \"energy\")"
+}
+
+###
+GET {{kuiperUrl}}/streams
+
+###
+GET {{kuiperUrl}}/streams/energy_stream
+
+###
+
+POST {{kuiperUrl}}/rules
+Content-Type: application/json
+
+{
+  "id": "energy_stream_rule_test",
+  "sql": "SELECT * FROM energy_stream",
+  "actions": [
+    {
+      "mqtt": {
+        "server": "tcp://10.229.249.68:1883",
+        "topic": "/enerygy/meter/cooked/data"
+      }
+    }
+  ]
+}
+
+###
+POST {{kuiperUrl}}/rules
+Content-Type: application/json
+
+{
+  "id": "energy_stream_rule",
+  "sql": "SELECT * FROM energy_stream",
+  "actions": [
+    {
+      "mqtt": {
+        "server": "tcp://10.122.130.254:1883",
+        "topic": "/enerygy/meter/cooked/data",
+        "username": "xuanyuan",
+        "password": "xuanyuanPassw0r1"
+      }
+    }
+  ]
+}
+
+###
+GET {{kuiperUrl}}/rules
+
+###
+
+GET {{kuiperUrl}}/rules/energy_stream_rule
+
+###
+
+POST {{kuiperUrl}}/rules
+Content-Type: application/json
+
+{}
+
+
+###
+GET {{kuiperUrl}}/plugins/functions
+
+###
+
+###
+GET {{kuiperUrl}}/plugins/sources
+Content-Type: application/json
+
+{
+}
+
+###
