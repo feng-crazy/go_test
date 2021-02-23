@@ -1,0 +1,6 @@
+.idea
+go*.sum
+logs
+bin
+build
+_output
