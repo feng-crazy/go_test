@@ -2,10 +2,11 @@ package sqlite3_test
 
 import (
 	"fmt"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"testing"
 	"time"
+
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 type EnergyInput struct {
@@ -32,6 +33,10 @@ type Device struct {
 
 	CreatedAt time.Time `gorm:"default:null"`
 	UpdatedAt time.Time `gorm:"default:null"`
+}
+
+func (d *Device) Table() string {
+	return "device"
 }
 
 func TestSqlite3Gorm(t *testing.T) {
