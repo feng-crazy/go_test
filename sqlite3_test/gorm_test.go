@@ -122,7 +122,7 @@ func f(t *testing.T) {
 	}
 	defer db.Close()
 
-	dt := db.Table("devices").Where(&Device{ID: 1}).Update(&Device{Expire: 3})
+	dt := db.Table("devices").Where(&Device{ID: 1}).Updates(&Device{Expire: 3})
 	fmt.Println(dt.Error)
 
 }

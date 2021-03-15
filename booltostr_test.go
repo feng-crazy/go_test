@@ -19,3 +19,17 @@ func TestInterface(t *testing.T) {
 	i =  errors.New("hahah ")
 	fmt.Printf("%+v", i)
 }
+
+func TestTmp(t *testing.T){
+	data := 1
+	input := data
+
+	{
+		var err error
+		input, err = 2, errors.New("test")
+		fmt.Println(err)
+		fmt.Println(input)
+	}
+
+	fmt.Println(input)
+}

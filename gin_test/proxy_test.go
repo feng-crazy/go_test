@@ -14,12 +14,13 @@ import (
 )
 
 func ReverseProxy() gin.HandlerFunc {
-	target := "localhost:9081"
+	target := "10.199.2.63:9081"
 	return func(c *gin.Context) {
 		director := func(req *http.Request) {
 			req.URL.Scheme = "http"
 			req.URL.Host = target
-			req.URL.Path = c.Param("url")
+			req.URL.Path = c.Param("path")
+			fmt.Println(req.URL.Path)
 		}
 		proxy := &httputil.ReverseProxy{Director: director}
 		proxy.ServeHTTP(c.Writer, c.Request)
@@ -30,7 +31,8 @@ func TestProxy(t *testing.T) {
 	// 创建默认的引擎
 	r := gin.Default()
 
-	r.Any("/kuiper/*url", ReverseProxy())
+	r.Any("/kuiper/*path", ReverseProxy())
+
 	// 运行 默认为80端口
 	r.Run()
 }
