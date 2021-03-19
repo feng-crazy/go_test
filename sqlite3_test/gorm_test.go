@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 type EnergyInput struct {
@@ -40,32 +40,24 @@ func (d *Device) Table() string {
 }
 
 func TestSqlite3Gorm(t *testing.T) {
-	db, err := gorm.Open("sqlite3", "./data/test.db")
+	db, err := gorm.Open(sqlite.Open("./data/test.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
-	defer db.Close()
 
-	if db.HasTable(&Device{}) {
-		db := db.AutoMigrate(&Device{})
-		if db.Error != nil {
-			fmt.Println(db.Error)
-		}
-	} else {
-		db := db.CreateTable(&Device{})
-		if db.Error != nil {
-			fmt.Println(db.Error)
-		}
+	err = db.AutoMigrate(&Device{})
+	if err != nil {
+		fmt.Println(db.Error)
 	}
 
 }
 
 func TestCreate(t *testing.T) {
-	db, err := gorm.Open("sqlite3", "./data/test.db")
+	db, err := gorm.Open(sqlite.Open("./data/test.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
-	defer db.Close()
+	db.Logger.LogMode(1)
 
 	dt := db.Table("devices").Create(&Device{
 		DeviceName: "test1",
@@ -77,11 +69,10 @@ func TestCreate(t *testing.T) {
 }
 
 func TestFindAll(t *testing.T) {
-	db, err := gorm.Open("sqlite3", "./data/test.db")
+	db, err := gorm.Open(sqlite.Open("./data/test.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
-	defer db.Close()
 
 	devices := make([]Device, 0)
 	db.Table("devices").Find(&devices)
@@ -89,11 +80,10 @@ func TestFindAll(t *testing.T) {
 }
 
 func TestFindOne(t *testing.T) {
-	db, err := gorm.Open("sqlite3", "./data/test.db")
+	db, err := gorm.Open(sqlite.Open("./data/test.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
-	defer db.Close()
 
 	device := Device{
 		DeviceName: "test1",
@@ -106,21 +96,20 @@ func TestFindOne(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	db, err := gorm.Open("sqlite3", "./data/test.db")
+	db, err := gorm.Open(sqlite.Open("./data/test.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
-	defer db.Close()
+
 	err = db.Delete(&Device{DeviceName: "test2"}).Error
 	fmt.Println(err)
 }
 
 func f(t *testing.T) {
-	db, err := gorm.Open("sqlite3", "./data/test.db")
+	db, err := gorm.Open(sqlite.Open("./data/test.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
-	defer db.Close()
 
 	dt := db.Table("devices").Where(&Device{ID: 1}).Updates(&Device{Expire: 3})
 	fmt.Println(dt.Error)
