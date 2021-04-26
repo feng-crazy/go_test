@@ -8,28 +8,24 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-
-
-
 func TestRedisPop(t *testing.T) {
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     "10.122.48.17:6379",
-		Password: "", // no password set
-		DB:       0,  // use default DB
+		Password: "abc123", // no password set
+		DB:       3,        // use default DB
 	})
 
-	for  {
-		val, err := rdb.RPop(ctx, "test").Bytes()
+	for {
+		val, err := rdb.Get(ctx, "hdf_test").Bytes()
 		if err != nil {
 
-		}else{
+		} else {
 			fmt.Println("byte: ", val)
 			fmt.Println("string", string(val))
 		}
 
-		time.Sleep(1* time.Second)
+		time.Sleep(1 * time.Second)
 	}
-
 
 }
 

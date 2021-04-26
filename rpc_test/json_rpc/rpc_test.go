@@ -21,6 +21,7 @@ type Arith struct {
 func (t *Arith) Multiply(args []Args, reply *int) error {
 	for _, arg := range args {
 		*reply = *reply + (arg.A * arg.B)
+		time.Sleep(1 * time.Second)
 	}
 
 	return nil
@@ -74,7 +75,7 @@ func TestRpcClient(t *testing.T) {
 		}
 
 		var reply int
-		if err := rpcclient.Call("Arith.Multiply", args, &reply, 2); err != nil {
+		if err := rpcclient.Call("Arith.Multiply", args, &reply, 4); err != nil {
 			log.Error(err)
 		}
 		log.Info("====>", reply)

@@ -35,7 +35,7 @@ type Device struct {
 	UpdatedAt time.Time `gorm:"default:null"`
 }
 
-func (d *Device) Table() string {
+func (d *Device) TableName() string {
 	return "device"
 }
 
@@ -49,7 +49,6 @@ func TestSqlite3Gorm(t *testing.T) {
 	if err != nil {
 		fmt.Println(db.Error)
 	}
-
 }
 
 func TestCreate(t *testing.T) {
@@ -59,7 +58,23 @@ func TestCreate(t *testing.T) {
 	}
 	db.Logger.LogMode(1)
 
-	dt := db.Table("devices").Create(&Device{
+	dt := db.Table("device").Save(&Device{
+		DeviceName: "test1",
+		Value:      1,
+		Expire:     1,
+		Input:      []byte{0, 1, 2},
+	})
+	fmt.Println(dt.Error)
+}
+
+func TestReplace(t *testing.T) {
+	db, err := gorm.Open(sqlite.Open("./data/test.db"), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+	db.Logger.LogMode(1)
+
+	dt := db.Table("device").Replace(&Device{
 		DeviceName: "test1",
 		Value:      1,
 		Expire:     1,

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/go-redis/redis/v8"
 )
@@ -13,43 +14,32 @@ var ctx = context.Background()
 func TestRedis(t *testing.T) {
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     "10.122.48.17:6379",
-		Password: "", // no password set
-		DB:       0,  // use default DB
+		Password: "abc123", // no password set
+		DB:       8,        // use default DB
 	})
 
-	value := []byte{1, 2, 3}
-	err := rdb.Set(ctx, "key", value, 0).Err()
+	value := []byte{1, 4, 3}
+	err := rdb.Set(ctx, "key11", value, -1*time.Second).Err()
 	if err != nil {
 		panic(err)
 	}
 
-	val, err := rdb.Get(ctx, "key").Bytes()
+	// rdb.Expire(ctx, "key", 6* time.Second)
+	val, err := rdb.Get(ctx, "key11").Bytes()
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println("key", val)
-
-	val2, err := rdb.Get(ctx, "key2").Result()
-	if err == redis.Nil {
-		fmt.Println("key2 does not exist")
-	} else if err != nil {
-		panic(err)
-	} else {
-		fmt.Println("key2", val2)
-	}
-	// Output: key value
-	// key2 does not exist
 }
-
 
 func TestRedisPush(t *testing.T) {
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     "10.122.48.17:6379",
-		Password: "", // no password set
-		DB:       0,  // use default DB
+		Password: "abc123", // no password set
+		DB:       0,        // use default DB
 	})
 
-
+	rdb.Expire(ctx, "keypush", 2*time.Second)
 
 	value1 := []byte{1, 2, 3}
 	value2 := []byte{94, 97, 99}
@@ -64,6 +54,34 @@ func TestRedisPush(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
+
+	time.Sleep(10 * time.Second)
+
+	val, err := rdb.RPop(ctx, "keypush").Bytes()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("keypush", val)
+
+	val, err = rdb.RPop(ctx, "keypush").Bytes()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("keypush", val)
+
+	val, err = rdb.RPop(ctx, "keypush").Bytes()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("keypush", val)
+}
+
+func TestRedisRPop(t *testing.T) {
+	rdb := redis.NewClient(&redis.Options{
+		Addr:     "10.122.48.17:6379",
+		Password: "abc123", // no password set
+		DB:       0,        // use default DB
+	})
 
 	val, err := rdb.RPop(ctx, "keypush").Bytes()
 	if err != nil {
@@ -97,13 +115,13 @@ func TestRedisHash(t *testing.T) {
 	// }{"1", "2"}
 
 	value := map[string]interface{}{
-		"f1" : 1,
-		"f2" : "2",
+		"f1": 1,
+		"f2": "2",
 	}
 
 	value1 := map[string]interface{}{
-		"f1" : 3,
-		"f2" : "4",
+		"f1": 3,
+		"f2": "4",
 	}
 
 	err := rdb.HMSet(ctx, "keyHash", value, value1).Err()
@@ -117,6 +135,4 @@ func TestRedisHash(t *testing.T) {
 	}
 	fmt.Println("keyHash", val)
 
-
 }
-

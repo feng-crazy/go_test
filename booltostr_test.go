@@ -1,6 +1,5 @@
 package go_test
 
-
 import (
 	"errors"
 	"fmt"
@@ -8,19 +7,23 @@ import (
 	"testing"
 )
 
-func TestBoolToStr(t *testing.T){
+func TestToStr(t *testing.T) {
+	s, err := strconv.Atoi("")
+	fmt.Println(s, err)
+}
+
+func TestBoolToStr(t *testing.T) {
 	s := strconv.FormatBool(true)
 	fmt.Println(s)
 }
 
-
 func TestInterface(t *testing.T) {
 	var i interface{}
-	i =  errors.New("hahah ")
+	i = errors.New("hahah ")
 	fmt.Printf("%+v", i)
 }
 
-func TestTmp(t *testing.T){
+func TestTmp(t *testing.T) {
 	data := 1
 	input := data
 
