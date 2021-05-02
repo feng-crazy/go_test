@@ -21,5 +21,15 @@ func TestChannelEqual(t *testing.T) {
 			fmt.Println("equal")
 		}
 	}
+}
 
+
+func TestChannelEqual2(t *testing.T) {
+	chMap := make(map[chan int]string)
+
+	ch := make(chan int)
+
+	chMap[ch] = "1"
+
+	fmt.Println(chMap[ch])
 }

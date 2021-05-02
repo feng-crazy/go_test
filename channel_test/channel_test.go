@@ -23,7 +23,7 @@ func TestChannel1(t *testing.T) {
 	go func() {
 		for {
 			v := rand.Int()
-			// fmt.Println("set v: ", v)
+			fmt.Println("set v: ", v)
 			ch <- v
 			time.Sleep(1 * time.Second)
 		}
@@ -32,19 +32,22 @@ func TestChannel1(t *testing.T) {
 	go func() {
 		for {
 			v := rand.Int()
-			// fmt.Println("set v: ", v)
+			fmt.Println("set v: ", v)
 			ch <- v
 			time.Sleep(1 * time.Second)
 		}
 	}()
 
 	go func() {
-		for {
-			for i := range ch {
-				fmt.Println("get v:", i)
+		count := 0
+		for i := range ch {
+			fmt.Println("get v:", i)
+			count++
+			if count == 2{
+				// close(ch)
+				fmt.Println("exit")
+				break
 			}
-
-			fmt.Println("----------------")
 		}
 	}()
 
@@ -54,7 +57,9 @@ func TestChannel1(t *testing.T) {
 		}
 	}
 
-	select {}
+	for  {
+		time.Sleep( 1 * time.Second)
+	}
 }
 
 func TestChannel(t *testing.T) {
