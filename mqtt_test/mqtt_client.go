@@ -2,6 +2,8 @@ package mqtt_client
 
 import (
 	"crypto/tls"
+	"crypto/x509"
+	"io/ioutil"
 	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
@@ -16,6 +18,7 @@ type MqttClient struct {
 	IP         string
 	User       string
 	Passwd     string
+	CA       string
 	Cert       string
 	PrivateKey string
 	Client     mqtt.Client
@@ -23,15 +26,30 @@ type MqttClient struct {
 
 // newTLSConfig new TLS configuration.
 // Only one side check. Mqtt broker check the cert from client.
-func (mc *MqttClient) newTLSConfig(certfile string, privateKey string) (*tls.Config, error) {
+func (mc *MqttClient) newTLSConfig() (*tls.Config, error) {
+	certpool := x509.NewCertPool()
+	pemCerts, err := ioutil.ReadFile(mc.CA)
+	if err == nil {
+		certpool.AppendCertsFromPEM(pemCerts)
+	}
+
 	// Import client certificate/key pair
-	cert, err := tls.LoadX509KeyPair(certfile, privateKey)
+	cert, err := tls.LoadX509KeyPair(mc.Cert, mc.PrivateKey)
 	if err != nil {
 		return nil, err
 	}
 
+	// Just to print out the client certificate..
+	cert.Leaf, err = x509.ParseCertificate(cert.Certificate[0])
+	if err != nil {
+		panic(err)
+	}
+	// fmt.Println(cert.Leaf)
+
 	// Create tls.Config with desired tls properties
 	return &tls.Config{
+		// RootCAs = certs used to verify server cert.
+		RootCAs: certpool,
 		// ClientAuth = whether to request cert from server.
 		// Since the server is set up for SSL, this happens
 		// anyways.
@@ -61,7 +79,7 @@ func (mc *MqttClient) Connect() error {
 		SetCleanSession(false).SetConnectRetryInterval(5 * time.Second).
 		SetReconnectingHandler(SetReconnectingCb)
 	if mc.Cert != "" {
-		tlsConfig, err := mc.newTLSConfig(mc.Cert, mc.PrivateKey)
+		tlsConfig, err := mc.newTLSConfig()
 		if err != nil {
 			return err
 		}

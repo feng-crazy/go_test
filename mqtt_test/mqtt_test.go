@@ -10,12 +10,14 @@ import (
 
 func TestMqttClient(t *testing.T) {
 	mqttClient := &MqttClient{
-		IP: "tcp://10.229.249.68:1883",
+		IP: "ssl://10.122.48.78:1883",
+		CA: "myCA\\ca.crt",
+		Cert       :"myCA\\client-crt.pem",
+		PrivateKey: "myCA\\client-key.pem",
 	}
 
 	if err := mqttClient.Connect(); err != nil {
 		logrus.Error(" mqtt connect failure, ", err)
-
 	}
 
 	_ = mqttClient.Subscribe("/hdf/test", msgHandle)
