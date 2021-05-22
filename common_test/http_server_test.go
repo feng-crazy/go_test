@@ -1,4 +1,4 @@
-package go_test
+package common_test
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func HttpForward(w http.ResponseWriter, req *http.Request){
+func HttpForward(w http.ResponseWriter, req *http.Request) {
 	// req.host不带http,req.url是完整的url
 	// fmt.Println(req.Host, " ", req.URL, "\n")
 
@@ -53,7 +53,7 @@ func HttpForward(w http.ResponseWriter, req *http.Request){
 	}
 }
 
-func TestHttpServer(t *testing.T){
+func TestHttpServer(t *testing.T) {
 	http.HandleFunc("/", HttpForward)
 	err := http.ListenAndServe(":12345", nil)
 	if err != nil {

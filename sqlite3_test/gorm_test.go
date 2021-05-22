@@ -73,14 +73,6 @@ func TestReplace(t *testing.T) {
 		panic("failed to connect database")
 	}
 	db.Logger.LogMode(1)
-
-	dt := db.Table("device").Replace(&Device{
-		DeviceName: "test1",
-		Value:      1,
-		Expire:     1,
-		Input:      []byte{0, 1, 2},
-	})
-	fmt.Println(dt.Error)
 }
 
 func TestFindAll(t *testing.T) {
@@ -120,7 +112,7 @@ func TestDelete(t *testing.T) {
 	fmt.Println(err)
 }
 
-func f(t *testing.T) {
+func TestUpdate(t *testing.T) {
 	db, err := gorm.Open(sqlite.Open("./data/test.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
@@ -129,4 +121,71 @@ func f(t *testing.T) {
 	dt := db.Table("devices").Where(&Device{ID: 1}).Updates(&Device{Expire: 3})
 	fmt.Println(dt.Error)
 
+}
+
+func TestBitchUpdate(t *testing.T) {
+	db, err := gorm.Open(sqlite.Open("./data/test.db"), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	type DTest struct {
+		ID   uint   `gorm:"primarykey"`
+		Name string `json:"name" gorm:"uniqueIndex"`
+		Dr   string `json:"dr"`
+		P1   string `json:"p1"`
+		P2   int    `json:"p2"`
+		P3   bool   `json:"p3"`
+	}
+	err = db.AutoMigrate(&DTest{})
+	if err != nil {
+		fmt.Println(db.Error)
+	}
+
+	arg := []DTest{
+		{
+			Name: "dev1",
+			Dr:   "0",
+			P1:   "",
+			P2:   0,
+			P3:   false,
+		},
+		{
+			Name: "dev2",
+			Dr:   "0",
+			P1:   "",
+			P2:   0,
+			P3:   false,
+		}}
+	fmt.Println(arg)
+
+	var dt *gorm.DB
+	// dt = db.Table("d_tests").CreateInBatches(&arg, 3)
+	// if dt.Error != nil {
+	// fmt.Println(dt.Error)
+	// 	return
+	// }
+
+	dt = db.Exec("replace into d_tests (name,dr,p1,p2,p3) values ('dev1','4','p1 test1', 1, true),('dev2','5','p1 test2', 2, true)")
+	fmt.Println(dt.Error)
+
+}
+
+func TestBitchDelete(t *testing.T) {
+	db, err := gorm.Open(sqlite.Open("./data/test.db"), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	type DTest struct {
+		ID   uint   `gorm:"primarykey"`
+		Name string `json:"name" gorm:"uniqueIndex"`
+		Dr   string `json:"dr"`
+		P1   string `json:"p1"`
+		P2   int    `json:"p2"`
+		P3   bool   `json:"p3"`
+	}
+
+	dt := db.Table("d_tests").Where("p3 = ?", 1).Delete(DTest{})
+	fmt.Println(dt.Error)
 }
