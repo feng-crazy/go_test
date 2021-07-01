@@ -1,4 +1,4 @@
-package sqlite3
+package sql_test
 
 import (
 	"fmt"
@@ -9,8 +9,8 @@ import (
 
 type User struct {
 	gorm.Model
-	Name string
-	Languages         []Language `gorm:"many2many:user_languages;"`
+	Name      string
+	Languages []Language `gorm:"many2many:user_languages;"`
 }
 
 type Language struct {

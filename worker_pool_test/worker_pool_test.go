@@ -9,11 +9,11 @@ import (
 	"github.com/xxjwxc/gowp/workpool"
 )
 
-func dofunc(i int)(int, error){
+func dofunc(i int) (int, error) {
 	return i, errors.New(strconv.Itoa(i))
 }
 
-func TestWorker(t *testing.T)  {
+func TestWorker(t *testing.T) {
 	wp := workpool.New(5) // 设置最大线程数
 	fmt.Println(wp.IsDone())
 	// wp.DoWait(func() error {

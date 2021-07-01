@@ -27,14 +27,14 @@ func TestCache(t *testing.T) {
 		go func(idx int) {
 			newKey := fmt.Sprintf("%s:%d", "key", idx)
 			v := rand.Int()
-			lc.Set(newKey, v, 4*time.Second)
+			lc.Set(newKey, v, 2*time.Second)
 
 			fmt.Printf("set vlaue key %s, value %d\n", newKey, v)
 		}(i)
 	}
-
-	time.Sleep(1 * time.Second)
 	fmt.Println(lc.ItemCount())
+	fmt.Println(lc.Items())
+	time.Sleep(1 * time.Second)
 
 	// 查看 go-cache 中 key 的数量
 	for i := 0; i < goroutineNums; i++ {
@@ -48,6 +48,7 @@ func TestCache(t *testing.T) {
 					fmt.Println("get value false:")
 					break
 				}
+				time.Sleep(1 * time.Second)
 			}
 		}(i)
 	}
@@ -64,5 +65,24 @@ func TestCache(t *testing.T) {
 	// 		break
 	// 	}
 	// }
-	select {}
+}
+
+func TestCache1(t *testing.T) {
+	var gatewayStatusCache = cache.New(3*time.Second, 1*time.Minute)
+	gatewayStatusCache.Set("test", true, 3*time.Second)
+	value, ok := gatewayStatusCache.Get("test")
+	fmt.Println(value, ok)
+	time.Sleep(4 * time.Second)
+
+	value, ok = gatewayStatusCache.Get("test")
+	fmt.Println(value, ok)
+
+	gatewayStatusCache.Set("test", false, 3*time.Second)
+	value, ok = gatewayStatusCache.Get("test")
+	fmt.Println(value, ok)
+	time.Sleep(4 * time.Second)
+
+	value, ok = gatewayStatusCache.Get("test")
+	fmt.Println(value, ok)
+
 }
