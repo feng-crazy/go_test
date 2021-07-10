@@ -19,6 +19,7 @@ require (
 	github.com/gorilla/websocket v1.4.2
 	github.com/jinzhu/gorm v1.9.12
 	github.com/mattn/go-sqlite3 v2.0.1+incompatible
+	github.com/mitchellh/mapstructure v1.1.2
 	github.com/panjf2000/ants/v2 v2.4.5
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/rfyiamcool/go-timewheel v1.0.1
