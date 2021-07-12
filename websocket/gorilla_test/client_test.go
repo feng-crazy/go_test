@@ -1,7 +1,6 @@
 package gorilla_test
 
 import (
-	"log"
 	"net/url"
 	"os"
 	"os/signal"
@@ -9,20 +8,21 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
+	"github.com/sirupsen/logrus"
 )
 
-func TestGorillaClent(t *testing.T) {
+func TestGorillaClient(t *testing.T) {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
 	addr := "localhost:9999"
 
 	u := url.URL{Scheme: "ws", Host: addr, Path: "/echo"}
-	log.Printf("connecting to %s", u.String())
+	logrus.Printf("connecting to %s", u.String())
 
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 	if err != nil {
-		log.Fatal("dial:", err)
+		logrus.Fatal("dial:", err)
 	}
 	defer c.Close()
 
@@ -33,14 +33,14 @@ func TestGorillaClent(t *testing.T) {
 		for {
 			_, message, err := c.ReadMessage()
 			if err != nil {
-				log.Println("read:", err)
+				logrus.Println("read:", err)
 				return
 			}
-			log.Printf("recv: %s", message)
+			logrus.Printf("recv: %s", message)
 		}
 	}()
 
-	ticker := time.NewTicker(time.Second)
+	ticker := time.NewTicker(5 * time.Second)
 	defer ticker.Stop()
 
 	for {
@@ -50,17 +50,18 @@ func TestGorillaClent(t *testing.T) {
 		case t := <-ticker.C:
 			err := c.WriteMessage(websocket.TextMessage, []byte(t.String()))
 			if err != nil {
-				log.Println("write:", err)
+				logrus.Println("write:", err)
 				return
 			}
+			logrus.Println("write success:", t.String())
 		case <-interrupt:
-			log.Println("interrupt")
+			logrus.Println("interrupt")
 
 			// Cleanly close the connection by sending a close message and then
 			// waiting (with timeout) for the server to close the connection.
 			err := c.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, ""))
 			if err != nil {
-				log.Println("write close:", err)
+				logrus.Println("write close:", err)
 				return
 			}
 			select {
