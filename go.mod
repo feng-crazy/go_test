@@ -5,7 +5,6 @@ go 1.14
 require (
 	github.com/360EntSecGroup-Skylar/excelize/v2 v2.3.2
 	github.com/StackExchange/wmi v0.0.0-20210224194228-fe8f1750fd46 // indirect
-	github.com/apache/plc4x/plc4go v0.0.0-20210707153229-35ff4b5b6803 // indirect
 	github.com/asaskevich/EventBus v0.0.0-20200907212545-49d423059eef
 	github.com/bmizerany/pq v0.0.0-20131128184720-da2b95e392c1
 	github.com/devfeel/mapper v0.7.5
@@ -32,6 +31,7 @@ require (
 	github.com/xxjwxc/gowp v0.0.0-20200603141413-57c3ba7108be
 	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
+	golang.org/x/sys v0.0.0-20210510120138-977fb7262007 // indirect
 	golang.org/x/text v0.3.4 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
