@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	_ "github.com/bmizerany/pq"
+	"github.com/feng-crazy/go-utils/str"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -30,10 +31,10 @@ func initPostgres() {
 }
 
 type Student struct {
-	Id    int `gorm:"column:id;not null;primaryKey;type:bigserial;commnet:'主键'"`
-	Name  string
-	Age   int
-	Score string
+	Id    int    `gorm:"column:id;not null;primaryKey;type:bigserial;commnet:'主键'"`
+	Name  string `gorm:"column:name"`
+	Age   int    `gorm:"column:age"`
+	Score string `gorm:"column:score"`
 }
 
 func TestPostgres(t *testing.T) {
@@ -105,10 +106,16 @@ func TestPostgres3(t *testing.T) {
 		return
 	}
 
+	colnums, err := str.SingleStructGormTagToStrArray(Student{})
+	if err != nil {
+		logrus.Error(err)
+		return
+	}
+
 	dt := postgresDB.Clauses(clause.OnConflict{
 		Columns: []clause.Column{{Name: "id"}},
 		// DoUpdates: clause.AssignmentColumns([]string{}),
-		DoUpdates: clause.AssignmentColumns([]string{"name", "age", "id", "score"}),
+		DoUpdates: clause.AssignmentColumns(colnums),
 	})
 
 	students := make([]Student, 10)
@@ -176,6 +183,45 @@ func TestPostgres5(t *testing.T) {
 		Age:   777,
 		Id:    777,
 		Score: "777",
+	})
+	dt = dt.Save(&students)
+
+	fmt.Println(dt.Error)
+}
+
+func TestPostgres7(t *testing.T) {
+	initPostgres()
+	if err := postgresDB.AutoMigrate(&Student{}); err != nil {
+		logrus.Errorf("system AutoMigrate err: %s", err.Error())
+		return
+	}
+
+	colnums, err := str.SingleStructGormTagToStrArray(Student{})
+	if err != nil {
+		logrus.Error(err)
+		return
+	}
+
+	dt := postgresDB.Clauses(clause.OnConflict{
+		Columns:   []clause.Column{{Name: "id"}},
+		DoUpdates: clause.AssignmentColumns(colnums),
+	})
+
+	students := make([]Student, 10)
+	for i := 0; i < 10; i++ {
+		students[i] = Student{
+			Name:  "test999",
+			Age:   i + 999,
+			Id:    i + 10,
+			Score: "999",
+		}
+	}
+
+	students = append(students, Student{
+		Name:  "test888",
+		Age:   888,
+		Id:    888,
+		Score: "888",
 	})
 	dt = dt.Save(&students)
 

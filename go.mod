@@ -9,7 +9,7 @@ require (
 	github.com/bmizerany/pq v0.0.0-20131128184720-da2b95e392c1
 	github.com/devfeel/mapper v0.7.5
 	github.com/eclipse/paho.mqtt.golang v1.3.3
-	github.com/feng-crazy/go-utils v0.0.0-20210531073225-cb833c151cc4
+	github.com/feng-crazy/go-utils v0.0.0-20210712031905-5b87f9945901
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-basic/uuid v1.0.0
 	github.com/go-ole/go-ole v1.2.5 // indirect
@@ -19,6 +19,7 @@ require (
 	github.com/gorilla/websocket v1.4.2
 	github.com/jinzhu/gorm v1.9.12
 	github.com/mattn/go-sqlite3 v2.0.1+incompatible
+	github.com/mitchellh/mapstructure v1.4.1
 	github.com/panjf2000/ants/v2 v2.4.5
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/rfyiamcool/go-timewheel v1.0.1
