@@ -30,9 +30,9 @@ func initPostgres() {
 }
 
 type Student struct {
+	Id    int `gorm:"column:id;not null;primaryKey;type:bigserial;commnet:'主键'"`
 	Name  string
 	Age   int
-	Id    int `gorm:"column:id;not null;primaryKey;type:bigserial;commnet:'主键'"`
 	Score string
 }
 
@@ -106,25 +106,76 @@ func TestPostgres3(t *testing.T) {
 	}
 
 	dt := postgresDB.Clauses(clause.OnConflict{
-		Columns:   []clause.Column{{Name: "id"}},
+		Columns: []clause.Column{{Name: "id"}},
+		// DoUpdates: clause.AssignmentColumns([]string{}),
 		DoUpdates: clause.AssignmentColumns([]string{"name", "age", "id", "score"}),
 	})
 
 	students := make([]Student, 10)
 	for i := 0; i < 10; i++ {
 		students[i] = Student{
-			Name:  "test3",
-			Age:   i + 333,
+			Name:  "test555",
+			Age:   i + 555,
 			Id:    i + 10,
-			Score: "63",
+			Score: "555",
 		}
 	}
 
 	students = append(students, Student{
-		Name:  "test333",
-		Age:   333,
-		Id:    333,
-		Score: "11",
+		Name:  "test777",
+		Age:   777,
+		Id:    777,
+		Score: "777",
+	})
+	dt = dt.Save(&students)
+
+	fmt.Println(dt.Error)
+}
+
+func TestPostgres4(t *testing.T) {
+	initPostgres()
+
+	type GatewayAccessControl struct {
+		Name  string
+		Age   int
+		Id    int `gorm:"column:id;not null;primaryKey;type:bigserial;commnet:'主键'"`
+		Score string
+	}
+	if err := postgresDB.AutoMigrate(&GatewayAccessControl{}); err != nil {
+		logrus.Errorf("system AutoMigrate err: %s", err.Error())
+		return
+	}
+
+}
+
+func TestPostgres5(t *testing.T) {
+	initPostgres()
+	if err := postgresDB.AutoMigrate(&Student{}); err != nil {
+		logrus.Errorf("system AutoMigrate err: %s", err.Error())
+		return
+	}
+
+	dt := postgresDB.Clauses(clause.OnConflict{
+		Columns: []clause.Column{{Name: "id"}},
+		// DoUpdates: clause.AssignmentColumns([]string{}),
+		DoUpdates: clause.AssignmentColumns([]string{"name", "age", "id", "score"}),
+	})
+
+	students := make([]Student, 10)
+	for i := 0; i < 10; i++ {
+		students[i] = Student{
+			Name:  "test555",
+			Age:   i + 555,
+			Id:    i + 10,
+			Score: "555",
+		}
+	}
+
+	students = append(students, Student{
+		Name:  "test777",
+		Age:   777,
+		Id:    777,
+		Score: "777",
 	})
 	dt = dt.Save(&students)
 
