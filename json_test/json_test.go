@@ -2,6 +2,7 @@ package json_test
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"testing"
 )
@@ -30,4 +31,28 @@ func TestJsonTag1(t *testing.T) {
 		fmt.Println(err)
 	}
 	fmt.Printf("%+v\n", v)
+}
+
+func TestJsonErorr(t *testing.T) {
+	var v = struct {
+		Err error `json:"err"`
+	}{
+		Err: errors.New("test"),
+	}
+
+	data, _ := json.Marshal(v)
+	fmt.Printf("%+v\n", data)
+	fmt.Printf("%+v\n", string(data))
+}
+
+func TestJsonErorr1(t *testing.T) {
+	var v = struct {
+		Err interface{} `json:"err"`
+	}{
+		Err: errors.New("test"),
+	}
+
+	data, _ := json.Marshal(v)
+	fmt.Printf("%+v\n", data)
+	fmt.Printf("%+v\n", string(data))
 }

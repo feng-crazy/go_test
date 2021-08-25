@@ -51,7 +51,7 @@ func TestMqttClient2(t *testing.T) {
 	if err := mqttClient.Connect(); err != nil {
 		logrus.Error(" mqtt connect failure, ", err)
 	}
-	i := 0
+	// i := 0
 	for {
 		_ = mqttClient.Publish("/hdf/test", []byte("test"))
 		time.Sleep(1 * time.Second)
@@ -92,4 +92,19 @@ func msgHandle2(client mqtt.Client, message mqtt.Message) {
 	fmt.Println("msgHandle2....................")
 	fmt.Println(message)
 	fmt.Println(string(message.Payload()))
+}
+
+func TestMqttClient4(t *testing.T) {
+	mqttClient := &MqttClient{
+		IP: "tcp://localhost:1883",
+	}
+
+	if err := mqttClient.Connect(); err != nil {
+		logrus.Error(" mqtt connect failure, ", err)
+	}
+
+	err := mqttClient.Subscribe("/hdf/test/+/111/+", msgHandle)
+
+	fmt.Println(err)
+	select {}
 }
