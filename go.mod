@@ -9,7 +9,7 @@ require (
 	github.com/bmizerany/pq v0.0.0-20131128184720-da2b95e392c1
 	github.com/devfeel/mapper v0.7.5
 	github.com/eclipse/paho.mqtt.golang v1.3.3
-	github.com/feng-crazy/go-utils v0.0.0-20210712031905-5b87f9945901
+	github.com/feng-crazy/go-utils v0.0.0-20210913064007-566569f59f07
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-basic/uuid v1.0.0
 	github.com/go-ole/go-ole v1.2.5 // indirect
@@ -18,6 +18,8 @@ require (
 	github.com/google/go-cmp v0.5.5 // indirect
 	github.com/gorilla/websocket v1.4.2
 	github.com/jinzhu/gorm v1.9.12
+	github.com/json-iterator/go v1.1.12
+	github.com/mailru/easyjson v0.7.1
 	github.com/mattn/go-sqlite3 v2.0.1+incompatible
 	github.com/mitchellh/mapstructure v1.4.1
 	github.com/panjf2000/ants/v2 v2.4.5
@@ -27,7 +29,10 @@ require (
 	github.com/shirou/gopsutil v3.21.4+incompatible
 	github.com/shirou/gopsutil/v3 v3.21.4
 	github.com/sirupsen/logrus v1.8.1
+	github.com/spf13/cast v1.3.0
+	github.com/stretchr/testify v1.6.1
 	github.com/tklauser/go-sysconf v0.3.5 // indirect
+	github.com/wenzhenxi/gorsa v0.0.0-20210524035706-528c7050d703
 	github.com/xxjwxc/gowp v0.0.0-20200603141413-57c3ba7108be
 	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c

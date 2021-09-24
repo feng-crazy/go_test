@@ -2,11 +2,14 @@ package common_test
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"testing"
 
 	"github.com/go-resty/resty/v2"
+
+	"github.com/wenzhenxi/gorsa"
 )
 
 func TestHttpClient(t *testing.T) {
@@ -138,4 +141,69 @@ func TestHttpClient3(t *testing.T) {
 	fmt.Println(resp.Cookies())
 	fmt.Println(resp.RawResponse.Cookies())
 	fmt.Println("-------")
+}
+
+func TestHttpOcsClient(t *testing.T) {
+
+	client := resty.New()
+	client.SetRedirectPolicy(resty.FlexibleRedirectPolicy(10))
+	resp, err := client.R().
+		Post("http://10.0.133.2:8080/ocs/secret")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	type RetSecret struct {
+		Ret string
+	}
+	r := RetSecret{}
+	err = json.Unmarshal(resp.Body(), &r)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(r)
+
+	password := "123456"
+	// block, _ := pem.Decode([]byte(r.Ret))
+	// fmt.Println("block", block)
+	// pubInterface, err:= x509.ParsePKIXPublicKey(block.Bytes)
+	// pubInterface, err:= x509.ParsePKIXPublicKey([]byte(r.Ret))
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	//
+	// public, ok := pubInterface.(rsa.PublicKey)
+	// if !ok{
+	// 	fmt.Println("not ok")
+	// }
+	// message := []byte(password)
+	// out, err := rsa.EncryptOAEP(sha256.New(), rand.Reader, &public, message, nil)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	key := "-----BEGIN Public key-----\n" + r.Ret + "\n-----END Public key-----"
+	out, err := gorsa.PublicEncrypt(password, key)
+	if err != nil {
+		fmt.Println(err)
+	}
+	data := map[string]string{
+		"username": "admin",
+		"password": string(out),
+	}
+	resp, err = client.R().SetFormData(data).Post("http://10.0.133.2:8080/ocs/login")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	body := map[string]string{
+		"areaId":    "4",
+		"doorId":    "65",
+		"beginDate": "2021-09-01 00:00:00 至 2021-09-08 23:59:59",
+		"pageSize":  "10",
+		"curPage":   "1",
+	}
+	resp, err = client.R().SetFormData(body).Post("http://10.0.133.2:8080/ocs/mj/doorstatusreport/datalist")
+	fmt.Println(resp)
 }

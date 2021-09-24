@@ -20,6 +20,7 @@ func TestJsonTag(t *testing.T) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fmt.Println(string(js))
 }
 

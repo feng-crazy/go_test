@@ -14,17 +14,16 @@ func TestSelect0(t *testing.T) {
 	c1 <- 1
 
 	select {
-	case i := <- c:
+	case i := <-c:
 		fmt.Println("send :", i)
 
-	case j := <- c1:
+	case j := <-c1:
 		fmt.Println("send :", j)
 	default:
 		return
 	}
 
 }
-
 
 func TestSelect(t *testing.T) {
 	c := make(chan int)
@@ -50,4 +49,24 @@ func TestSelect(t *testing.T) {
 		i++
 		time.Sleep(time.Second)
 	}
+}
+
+func TestSelectBreak(t *testing.T) {
+	i := 0
+Loop:
+	for {
+		select {
+		case <-time.After(time.Second * time.Duration(1)):
+			i++
+			if i == 5 {
+				fmt.Println("跳出for循环")
+				break Loop
+			}
+			break
+		}
+		fmt.Println("for循环内 i=", i)
+	}
+
+	fmt.Println("for循环外")
+
 }
