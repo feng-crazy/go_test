@@ -7,9 +7,11 @@ require (
 	github.com/StackExchange/wmi v0.0.0-20210224194228-fe8f1750fd46 // indirect
 	github.com/asaskevich/EventBus v0.0.0-20200907212545-49d423059eef
 	github.com/bmizerany/pq v0.0.0-20131128184720-da2b95e392c1
+	github.com/cornelk/hashmap v1.0.1
 	github.com/devfeel/mapper v0.7.5
 	github.com/eclipse/paho.mqtt.golang v1.3.3
 	github.com/feng-crazy/go-utils v0.0.0-20210913064007-566569f59f07
+	github.com/gin-contrib/location v0.0.2
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-basic/uuid v1.0.0
 	github.com/go-ole/go-ole v1.2.5 // indirect
@@ -26,11 +28,14 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/rfyiamcool/go-timewheel v1.0.1
 	github.com/robfig/cron/v3 v3.0.1
+	github.com/sacOO7/gowebsocket v0.0.0-20210515122958-9396f1a71e23 // indirect
 	github.com/shirou/gopsutil v3.21.4+incompatible
 	github.com/shirou/gopsutil/v3 v3.21.4
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cast v1.3.0
 	github.com/stretchr/testify v1.6.1
+	github.com/tidwall/gjson v1.9.1
+	github.com/tidwall/sjson v1.2.2
 	github.com/tklauser/go-sysconf v0.3.5 // indirect
 	github.com/wenzhenxi/gorsa v0.0.0-20210524035706-528c7050d703
 	github.com/xxjwxc/gowp v0.0.0-20200603141413-57c3ba7108be

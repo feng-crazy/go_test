@@ -54,6 +54,7 @@ func handleConnection(conn net.Conn) {
 		tmpBuffer = protocol.Unpack(append(tmpBuffer, buffer[:n]...), readerChannel)
 	}
 }
+
 func reader(readerChannel chan []byte) {
 	for {
 		select {
@@ -62,6 +63,7 @@ func reader(readerChannel chan []byte) {
 		}
 	}
 }
+
 func Log(v ...interface{}) {
 	fmt.Println(v...)
 }

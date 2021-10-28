@@ -1,0 +1,19 @@
+<root ord="usr_login_ret" sess="332" ret="ok" aud_sample="32000" aud_fmt="pcm" usr_guid="{840FF5B8-2D58-401C-A223-FCD0C771E02B}" usr_nickname="admin" usr_priority="16" time="2021-10-26 15:00:53" sys_restart_enable="1" sys_restart_time="01:00:00" rtsp="" usr_rtsp_ip="" usr_rtsp_port="0" usr_rtsp_usr="" usr_rtsp_pwd="" usr_rtsp_sdp="" upgrade_path="" upgrade_force="0" usr_tk_vol="70" usr_mt_vol="70" client_id="">
+    <areas>
+        <area name="用户列表" id="{-1}"/>
+        <area name="未分区" id="{00000000-0000-0000-0000-000000000000}"/>
+        <area name="负三层" id="{07CAE003-BE44-428F-AD45-D5192CB396E6}"/>
+        <area name="负二层" id="{606DDDDA-8399-45CB-AC9D-E3D687548592}"/>
+        <area name="负一层          " id="{A90F1CD3-4988-4061-943C-A2DA8C3ED24D}"/>
+    </areas>
+    <usrs>
+        <usr name="B3-333" nick_name="" id="{05D6BA6E-04B5-40F2-BA4B-47B584532D1D}" pid="{606DDDDA-8399-45CB-AC9D-E3D687548592}" ip="10.0.134.23" usr_priority="0" status="1" has_vid="1" has_talk="1" rtsp="" tp="2" io_in2_tp="0" io_in2="0"/>
+        <usr name="B2-222" nick_name="" id="{0D641DA4-CB03-47BB-AC78-C2C7F37404FD}" pid="{00000000-0000-0000-0000-000000000000}" ip="" usr_priority="0" status="0" has_vid="1" has_talk="1" rtsp="" tp="2" io_in2_tp="0" io_in2="0"/>
+        <usr name="B1-111" nick_name="" id="{17752D73-1FA5-406B-A2E3-8BFC64213892}" pid="{A90F1CD3-4988-4061-943C-A2DA8C3ED24D}" ip="10.0.134.12" usr_priority="0" status="1" has_vid="1" has_talk="1" rtsp="" tp="2" io_in2_tp="0" io_in2="0"/>
+    </usrs>
+    <usr_pfs/>
+    <usr_infos/>
+    <tasks/>
+    <progs/>
+    <meets/>
+</root>
