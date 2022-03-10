@@ -9,6 +9,41 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func TestServer(t *testing.T) {
+	// 创建默认的引擎
+	r := gin.Default()
+
+	r.GET("/test", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "OK",
+		})
+
+		return
+	})
+	// 运行 默认为80端口
+	err := r.Run(":6666")
+	if err != nil {
+		return
+	}
+}
+
+func TestServer1(t *testing.T) {
+	// 创建默认的引擎
+	r := gin.Default()
+
+	r.GET("/test", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "server1",
+		})
+
+		return
+	})
+	// 运行 默认为80端口
+	err := r.Run(":6677")
+	if err != nil {
+		return
+	}
+}
 func TestServerFile(t *testing.T) {
 	// 创建默认的引擎
 	r := gin.Default()
@@ -37,7 +72,7 @@ func TestServerFile(t *testing.T) {
 	r.GET("/download/test", func(c *gin.Context) {
 		data := make(map[string]interface{})
 		err := c.ShouldBind(&data)
-		if err != nil{
+		if err != nil {
 			c.JSON(http.StatusBadRequest, err)
 			return
 		}
@@ -45,9 +80,8 @@ func TestServerFile(t *testing.T) {
 		c.Writer.WriteHeader(http.StatusOK)
 		c.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", "test.txt")) // fmt.Sprintf("attachment; filename=%s", filename)对下载的文件重命名
 
-
 		file, err := ioutil.ReadFile("./data/test.txt")
-		if err != nil{
+		if err != nil {
 			c.String(http.StatusBadRequest, err.Error())
 			return
 		}
@@ -61,5 +95,5 @@ func TestServerFile(t *testing.T) {
 		return
 	})
 	// 运行 默认为80端口
-	r.Run()
+	r.Run(":6666")
 }

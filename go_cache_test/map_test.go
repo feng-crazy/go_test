@@ -52,3 +52,10 @@ func TestMap(t *testing.T) {
 
 	select {}
 }
+
+func TestMapDel(t *testing.T) {
+	m1 := map[string]string{}
+	m1["1"] = "1"
+	delete(m1, "2")
+	fmt.Println(m1)
+}

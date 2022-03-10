@@ -1,0 +1,20 @@
+{
+  "originator": "qwert8F00B204E980099800000",
+  "devs": [
+    {
+      "deviceToken": "qwert8F00B204E980099875433",
+      "data": [
+        {
+          "eventDate": "1643014863391",
+          "name": "PWSPOH",
+          "value": 29
+        },
+        {
+          "eventDate": "1643014863391",
+          "name": "PWSTOH",
+          "value": 75
+        }
+      ]
+    }
+  ]
+}

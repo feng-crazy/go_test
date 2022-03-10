@@ -6,6 +6,7 @@ import (
 	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+	"github.com/go-basic/uuid"
 	"github.com/sirupsen/logrus"
 )
 
@@ -107,4 +108,41 @@ func TestMqttClient4(t *testing.T) {
 
 	fmt.Println(err)
 	select {}
+}
+
+func TestMqttClient5(t *testing.T) {
+	mqttClient := &MqttClient{
+		Qos:      0,
+		Retained: false,
+		IP:       "mqtt://10.229.251.8:32040/message-center-lingyun-test",
+		User:     "message-center-lingyun-test",
+		Passwd:   "tlGodxpaSPy",
+	}
+
+	if err := mqttClient.Connect(); err != nil {
+		logrus.Error(" mqtt connect failure, ", err)
+	}
+
+	err := mqttClient.Subscribe("/hdf/test/+/111/+", msgHandle)
+
+	fmt.Println(err)
+	select {}
+}
+
+func TestMqttClient6(t *testing.T) {
+
+	opts := mqtt.NewClientOptions().AddBroker("ws://10.229.251.8:32040/message-center-lingyun-test").SetClientID(uuid.New()).
+		SetCleanSession(false).SetConnectRetryInterval(5 * time.Second).
+		SetReconnectingHandler(SetReconnectingCb)
+
+	opts.SetUsername("message-center-lingyun-test")
+	opts.SetPassword("tlGodxpaSPy")
+
+	client := mqtt.NewClient(opts)
+	// The token is used to indicate when actions have completed.
+	if tc := client.Connect(); tc.Wait() && tc.Error() != nil {
+		logrus.Error(tc.Error())
+		return
+	}
+
 }

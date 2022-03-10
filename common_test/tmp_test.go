@@ -27,3 +27,89 @@ func TestFloadToBool(t *testing.T) {
 	b = cast.ToBool(f)
 	fmt.Println(b)
 }
+
+func TestInterfaceNil(t *testing.T) {
+	var p *int = nil
+	var v interface{} = p
+	fmt.Println(p == v)
+	fmt.Println(v == nil)
+}
+
+type Link struct {
+	value int
+	Next  *Link
+}
+
+func PrintLink(head *Link) {
+	for head.Next != nil {
+		fmt.Println(head.value)
+		node := head.Next
+		head = node
+	}
+}
+
+func TestTmp1(t *testing.T) {
+	l := new(Link)
+	head := l
+	for i := 0; i < 5; i++ {
+		node := &Link{
+			value: i + 1,
+			Next:  nil,
+		}
+		head.Next = node
+		head = node
+	}
+	PrintLink(l)
+	left, right := 2, 4
+	PrintLink(Revert(l, left, right))
+}
+
+func Revert(head *Link, left, right int) *Link {
+	if head == nil || left >= right {
+		return head
+	}
+	newHead := &Link{value: 0, Next: head}
+	pre := newHead
+	for count := 0; pre.Next != nil && count < left-1; count++ {
+		pre = pre.Next
+	}
+	if pre.Next == nil {
+		return head
+	}
+	cur := pre.Next
+	for i := 0; i < right-left; i++ {
+		tmp := pre.Next
+		pre.Next = tmp.Next
+		cur.Next = pre.Next
+		pre.Next = tmp
+	}
+	return newHead.Next
+}
+
+type sc struct {
+	left  int
+	right interface{}
+	sm    string
+}
+
+func calc(str string) int {
+	var result int
+
+	data := []byte(str)
+	for _, v := range data {
+		if v >= '0' && v <= '9' {
+
+		} else if v == '+' || v == '-' || v == '*' || v == '/' {
+
+		} else if v == '(' {
+			// 入栈
+		} else if v == ')' {
+			// 出栈
+		}
+	}
+	return result
+}
+
+func TestTmp(t *testing.T) {
+
+}

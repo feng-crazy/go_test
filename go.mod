@@ -9,7 +9,7 @@ require (
 	github.com/bmizerany/pq v0.0.0-20131128184720-da2b95e392c1
 	github.com/cornelk/hashmap v1.0.1
 	github.com/devfeel/mapper v0.7.5
-	github.com/eclipse/paho.mqtt.golang v1.3.3
+	github.com/eclipse/paho.mqtt.golang v1.3.5
 	github.com/feng-crazy/go-utils v0.0.0-20210913064007-566569f59f07
 	github.com/gin-contrib/location v0.0.2
 	github.com/gin-gonic/gin v1.6.3
