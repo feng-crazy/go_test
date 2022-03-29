@@ -1,8 +1,12 @@
 package common
 
 import (
+	"context"
 	"fmt"
+	"math/rand"
+	"sync"
 	"testing"
+	"time"
 
 	"github.com/spf13/cast"
 )
@@ -112,4 +116,106 @@ func calc(str string) int {
 
 func TestTmp(t *testing.T) {
 
+}
+
+var done chan struct{}
+
+func sender(ctx context.Context, ch chan int) {
+	for {
+		// math.Rand
+		select {
+		case <-ctx.Done():
+			return
+		default:
+			ch <- rand.Int()
+			time.Sleep(1 * time.Second)
+		}
+	}
+}
+
+func recv(ctx context.Context, ch chan int) {
+	for {
+		select {
+		case v := <-ch:
+			fmt.Println("recv: ", v)
+		case <-ctx.Done():
+			return
+		}
+	}
+}
+
+func recv1(ctx context.Context, ch chan int) {
+	for {
+		select {
+		case v := <-ch:
+			fmt.Printf("recv%v, %d: ", ctx.Value("num"), v)
+		case <-ctx.Done():
+			return
+		}
+	}
+}
+
+func TestChannel(t *testing.T) {
+	num := 3
+	ch := make(chan int, num)
+
+	ctx, cancel := context.WithCancel(context.WithValue(context.Background(), "num", num))
+
+	go sender(ctx, ch)
+	for i := 0; i < num; i++ {
+		go recv(ctx, ch)
+	}
+
+	// go recv1(ctx, ch)
+
+	time.Sleep(5 * time.Second)
+	cancel()
+}
+
+func sliceHandle(rv <-chan string, sd chan<- map[byte]int) {
+	m := make(map[byte]int)
+	for v := range rv {
+		ss := []byte(v)
+		for _, sv := range ss {
+			m[sv]++
+		}
+	}
+}
+
+var wait = sync.WaitGroup{}
+
+func mapHandle(sd <-chan map[byte]int) {
+	m := make(map[byte]int)
+	for {
+		select {
+		case r := <-sd:
+			for k, v := range r {
+				m[k] = v
+			}
+			wait.Wait()
+		}
+
+	}
+	fmt.Println(m)
+}
+
+func TestSlice(t *testing.T) {
+	workNum := 3
+
+	rv := make(chan string, workNum)
+	sd := make(chan map[byte]int, workNum*2)
+	s := []string{"abc", "cbd", "ebg"}
+
+	wait.Add(1)
+	go mapHandle(sd)
+
+	for i := 0; i < workNum; i++ {
+		go sliceHandle(rv, sd)
+	}
+
+	for _, v := range s {
+		rv <- v
+	}
+
+	wait.Done()
 }
