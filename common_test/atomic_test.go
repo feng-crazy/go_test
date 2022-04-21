@@ -11,11 +11,12 @@ func TestAtomic(t *testing.T) {
 	tmp.Store(false)
 	if tmp.Load() == true {
 		fmt.Println("true ", tmp.Load())
-	} else {
+	}
+	if tmp.Load() == false {
 		fmt.Println("false ", tmp.Load())
 	}
-	i := tmp.Load()
-	if i.(bool) {
+	i := tmp.Load().(bool)
+	if i {
 		fmt.Println(i)
 	}
 
