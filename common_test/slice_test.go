@@ -25,6 +25,13 @@ func TestSliceSplit(t *testing.T) {
 
 	b = a[1:2:4]
 	fmt.Println(b)
+
+	b = a[0:5]
+	fmt.Println(b)
+
+	c := []int{}
+	b = c[0:0]
+	fmt.Println(b)
 }
 
 func TestSliceCopy(t *testing.T) {

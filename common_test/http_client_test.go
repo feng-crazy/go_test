@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"testing"
 
@@ -206,4 +207,99 @@ func TestHttpOcsClient(t *testing.T) {
 	}
 	resp, err = client.R().SetFormData(body).Post("http://10.0.133.2:8080/ocs/mj/doorstatusreport/datalist")
 	fmt.Println(resp)
+}
+
+type ListParam struct {
+	Keyword  string `json:"keyword,omitempty"`
+	Order    string `json:"order,omitempty"`
+	OrderBy  string `json:"orderBy,omitempty"`
+	PageNo   int    `json:"pageNo,omitempty"`
+	PageSize int    `json:"pageSize,omitempty"`
+}
+
+// 找一个或多个所属公司下的所有有用户的请求和响应
+type CompanyUserListRequest struct {
+	*ListParam
+	CompanyNames []string `json:"companyNames,omitempty"`
+	ProjectId    string   `json:"projectId"`
+	RequestId    string   `json:"-"`
+}
+
+type User struct {
+	Name              string   `json:"name"`
+	LoginType         string   `json:"loginType"`
+	UserId            string   `json:"userId"`
+	Email             string   `json:"email"`
+	PhoneNumber       string   `json:"phoneNumber"`
+	State             string   `json:"state"`
+	Status            int      `json:"status"`
+	Admin             bool     `json:"admin"`
+	OrgPermission     string   `json:"orgPermission"`
+	ProjectPermission string   `json:"projectPermission"`
+	OrganizationID    string   `json:"organizationId"`
+	OrganizationName  string   `json:"organizationName"`
+	CompanyName       string   `json:"companyName"`
+	CreateTime        string   `json:"createTime"`
+	Creator           string   `json:"creator"`
+	PasswordState     string   `json:"passwordState"`
+	PasswordSetted    bool     `json:"PasswordSetted"`
+	NeedResetPassword bool     `json:"needResetPassword"`
+	RoleNameList      []string `json:"roleNameList"`
+	RoleIds           []string `json:"roleIds"`
+	Password          string   `json:"password"`
+	AccessKey         string   `json:"accessKey"`
+	SecretKey         string   `json:"secretKey"`
+}
+
+type UserListResponse struct {
+	TotalCount int    `json:"totalCount"`
+	Result     []User `json:"result"`
+}
+
+func TestHttpIdaasClient(t *testing.T) {
+	var userList = UserListResponse{}
+	request := CompanyUserListRequest{
+		ListParam: &ListParam{
+			Keyword:  "",
+			Order:    "DESC",
+			OrderBy:  "create_time",
+			PageNo:   1,
+			PageSize: 10,
+		},
+		CompanyNames: []string{"招商局3"},
+		ProjectId:    "148dbb10005e11ea939c7df8991ad0e7",
+		RequestId:    "",
+	}
+
+	client := http.Client{}
+
+	data, err := json.Marshal(request)
+	if err != nil {
+		fmt.Println(err)
+	}
+	body := bytes.NewBuffer(data)
+	url := "http://localhost:8667/v1/company/UserLists"
+	req, err := http.NewRequest("POST", url, body)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	//req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Cookie", "idaas-csrftoken=t91xgvjqzyt21kg3; idaas-default-url=; idaas-project-name=deng; idaas-sessionid=pbbty6ihprc3qe0x")
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	defer resp.Body.Close()
+	respData, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	err = json.Unmarshal(respData, &userList)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Printf("%+v", userList)
 }

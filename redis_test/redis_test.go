@@ -3,6 +3,7 @@ package redis_test
 import (
 	"context"
 	"fmt"
+	"log"
 	"testing"
 	"time"
 
@@ -13,28 +14,28 @@ var ctx = context.Background()
 
 func TestRedis(t *testing.T) {
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "10.122.48.17:6379",
-		Password: "abc123", // no password set
-		DB:       8,        // use default DB
+		Addr:     "127.0.0.1:6379",
+		Password: "", // no password set
+		DB:       1,  // use default DB
 	})
 
 	value := []byte{1, 4, 3}
 	err := rdb.Set(ctx, "key11", value, -1*time.Second).Err()
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 
 	// rdb.Expire(ctx, "key", 6* time.Second)
 	val, err := rdb.Get(ctx, "key11").Bytes()
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 	fmt.Println("key", val)
 }
 
 func TestRedisPush(t *testing.T) {
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "10.122.48.17:6379",
+		Addr:     "127.0.0.1:6379",
 		Password: "abc123", // no password set
 		DB:       0,        // use default DB
 	})
@@ -78,7 +79,7 @@ func TestRedisPush(t *testing.T) {
 
 func TestRedisRPop(t *testing.T) {
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "10.122.48.17:6379",
+		Addr:     "127.0.0.1:6379",
 		Password: "abc123", // no password set
 		DB:       0,        // use default DB
 	})
@@ -104,7 +105,7 @@ func TestRedisRPop(t *testing.T) {
 
 func TestRedisHash(t *testing.T) {
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "10.122.48.17:6379",
+		Addr:     "127.0.0.1:6379",
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})

@@ -14,6 +14,7 @@ require (
 	github.com/gin-contrib/location v0.0.2
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-basic/uuid v1.0.0
+	github.com/go-delve/delve v1.8.3 // indirect
 	github.com/go-ole/go-ole v1.2.5 // indirect
 	github.com/go-redis/redis/v8 v8.4.11
 	github.com/go-resty/resty/v2 v2.6.0
@@ -33,16 +34,15 @@ require (
 	github.com/shirou/gopsutil/v3 v3.21.4
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cast v1.3.0
-	github.com/stretchr/testify v1.6.1
+	github.com/stretchr/testify v1.7.0
 	github.com/tidwall/gjson v1.9.1
 	github.com/tidwall/sjson v1.2.2
 	github.com/tklauser/go-sysconf v0.3.5 // indirect
 	github.com/wenzhenxi/gorsa v0.0.0-20210524035706-528c7050d703
 	github.com/xxjwxc/gowp v0.0.0-20200603141413-57c3ba7108be
-	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
+	golang.org/x/net v0.0.0-20211015210444-4f30a5c0130f
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
-	golang.org/x/sys v0.0.0-20210510120138-977fb7262007 // indirect
-	golang.org/x/text v0.3.4
+	golang.org/x/text v0.3.7
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
