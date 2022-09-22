@@ -1,4 +1,4 @@
-package common_test
+package http_test
 
 import (
 	"context"
@@ -108,7 +108,7 @@ func TestHttpServe1r(t *testing.T) {
 		}
 	}()
 
-	time.Sleep(5* time.Second)
+	time.Sleep(5 * time.Second)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -123,7 +123,5 @@ func TestHttpServe1r(t *testing.T) {
 	}
 	logrus.Println("Server exiting")
 
-	select {
-
-	}
+	select {}
 }

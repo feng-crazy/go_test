@@ -1,4 +1,4 @@
-package common_test
+package http_test
 
 import (
 	"bytes"
