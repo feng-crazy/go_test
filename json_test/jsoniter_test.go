@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/json-iterator/go"
+	jsoniter "github.com/json-iterator/go"
 	"github.com/stretchr/testify/require"
 )
 

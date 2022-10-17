@@ -98,7 +98,7 @@ type ConnectionOptions struct {
 	UseCompression bool
 	UseSSL         bool
 	Proxy          func(*http.Request) (*url.URL, error)
-	Subprotocols   [] string
+	Subprotocols   []string
 }
 
 func TestGorillaClient1(t *testing.T) {
@@ -106,7 +106,7 @@ func TestGorillaClient1(t *testing.T) {
 	signal.Notify(interrupt, os.Interrupt)
 
 	WebsocketDialer := &websocket.Dialer{}
-	RequestHeader:= http.Header{}
+	RequestHeader := http.Header{}
 
 	RequestHeader.Set("Accept-Encoding", "gzip, deflate, sdch")
 	RequestHeader.Set("Accept-Language", "en-US,en;q=0.8")
@@ -187,7 +187,6 @@ func TestClient(t *testing.T) {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
-
 	addr := "10.0.128.5:14305"
 
 	u := url.URL{Scheme: "ws", Host: addr, Path: "/opensmart/api/1.0/login?user=system"}
@@ -209,7 +208,7 @@ func TestClient(t *testing.T) {
 		log.Println("Recieved message " + message)
 	}
 
-	socket.OnBinaryMessage = func(data [] byte, socket gowebsocket.Socket) {
+	socket.OnBinaryMessage = func(data []byte, socket gowebsocket.Socket) {
 		log.Println("Recieved binary data ", data)
 	}
 

@@ -16,7 +16,7 @@ func TestClosetChannel(t *testing.T) {
 		for {
 			v := rand.Int()
 			// fmt.Println("set v: ", v)
-			t, ok := <- ch
+			t, ok := <-ch
 			fmt.Println(t, ok)
 			ch <- v
 			time.Sleep(1 * time.Second)
@@ -27,9 +27,9 @@ func TestClosetChannel(t *testing.T) {
 		for {
 			count := 0
 			for i := range ch {
-				count ++
+				count++
 				fmt.Println("get v:", i)
-				if count ==2{
+				if count == 2 {
 					close(ch)
 					break
 				}
@@ -39,11 +39,10 @@ func TestClosetChannel(t *testing.T) {
 		}
 	}()
 
-	for{
+	for {
 		time.Sleep(1 * time.Second)
 	}
 }
-
 
 func TestClosetChannel2(t *testing.T) {
 	rand.Seed(time.Now().Unix())
@@ -57,8 +56,8 @@ func TestClosetChannel2(t *testing.T) {
 			fmt.Println("set v: ", v)
 			ch <- v
 			time.Sleep(500 * time.Millisecond)
-			count ++
-			if count > 10{
+			count++
+			if count > 10 {
 				close(ch)
 				break
 			}
@@ -69,14 +68,14 @@ func TestClosetChannel2(t *testing.T) {
 	go func() {
 		count := 0
 		for i := range ch {
-			count ++
+			count++
 			fmt.Println("get v:", i)
 		}
 
 		fmt.Println("--------get end--------")
 	}()
 
-	for{
+	for {
 		time.Sleep(1 * time.Second)
 	}
 }

@@ -18,7 +18,7 @@ type MqttClient struct {
 	IP         string
 	User       string
 	Passwd     string
-	CA       string
+	CA         string
 	Cert       string
 	PrivateKey string
 	Client     mqtt.Client

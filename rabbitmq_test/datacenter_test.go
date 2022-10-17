@@ -21,14 +21,12 @@ func TestDataCenter(t *testing.T) {
 		IsDeclare:  false,
 	}
 	mq, err := rabbitmq.New(&rabbitmq.Config{
-		Addr:         "amqp://admin:admin@10.229.249.109:5672/",
+		Addr:     "amqp://admin:admin@10.229.249.109:5672/",
 		Exchange: ex,
 	})
 	if err != nil {
 		panic(err)
 	}
-
-
 
 	msgs, err := mq.Sub(queueMeasurement)
 	if err != nil {

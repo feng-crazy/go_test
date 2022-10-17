@@ -3,13 +3,14 @@ package http_test
 import (
 	"bytes"
 	"fmt"
-	log "github.com/sirupsen/logrus"
-	"golang.org/x/net/html"
-	"golang.org/x/net/html/charset"
 	"io/ioutil"
 	"net/url"
 	"strings"
 	"testing"
+
+	log "github.com/sirupsen/logrus"
+	"golang.org/x/net/html"
+	"golang.org/x/net/html/charset"
 )
 
 func TestParseHtml(t *testing.T) {

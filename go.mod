@@ -34,6 +34,7 @@ require (
 	github.com/shirou/gopsutil/v3 v3.21.4
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cast v1.3.0
+	github.com/spf13/viper v1.4.0
 	github.com/stretchr/testify v1.7.0
 	github.com/tidwall/gjson v1.9.1
 	github.com/tidwall/sjson v1.2.2

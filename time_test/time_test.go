@@ -61,3 +61,38 @@ func TestTimeTicker(t *testing.T) {
 	}()
 	select {}
 }
+
+func TestAfterTimer(t *testing.T) {
+	ch := make(chan string)
+	go func() {
+		for {
+			time.Sleep(time.Second * 3)
+			ch <- "工作中"
+		}
+
+	}()
+
+	for {
+		select {
+		case data := <-ch:
+			t.Log(data)
+		case <-time.After(time.Second * 3):
+			t.Log("超时了！！！")
+		}
+	}
+
+}
+
+func TestAfterTimer1(t *testing.T) {
+	i := 0
+	var waitDuration time.Duration = 0
+	for {
+		timeNow := <-time.After(time.Second * time.Duration(i))
+		t.Log("超时了！！！", time.Now().Unix(), timeNow.Unix())
+		i++
+		waitUntilTime := timeNow.Add(time.Duration(i) * time.Second)
+		t.Log("waitUntilTime", waitUntilTime.String(), waitUntilTime.Unix())
+		waitDuration = time.Until(waitUntilTime)
+		t.Log("waitDuration ", waitDuration)
+	}
+}

@@ -1,0 +1,60 @@
+project: accesser
+runEnv: "dev"
+
+logLevel: debug
+
+rpcServer:
+  accessUrl: ":8888"
+  dispatcherUrl: ":8899"
+
+
+register:
+  enable: true
+  mqtt:
+    url: "tcp://127.0.0.1:1885"
+    user: test
+    passwd: 123456
+    ca: ""
+    cert: ""
+    privateKey: ""
+  mq:
+    url: "amqp://admin:admin@127.0.0.1:5673/"
+    queueName: "edge.register"
+    queueKey: "edge.register"
+
+common:
+  enable: true
+  mqtt:
+    url: "tcp://127.0.0.1:1888"
+    user: ""
+    passwd: ""
+    ca: ""
+    cert: ""
+    privateKey: ""
+  mq:
+    url: "amqp://admin:admin@127.0.0.1:5672/"
+    queueName: "edge.common"
+    queueKey: "edge.common"
+
+postgresql:
+  host: 127.0.0.1
+  port: 5438
+  dbname: cloudedge
+  username: cloudedge
+  password: cloudedge
+  timezone: Asia/Shanghai
+
+bridge:
+  enable: true
+  mqtt:
+    url: "tcp://127.0.0.1:1883"
+    user: "test"
+    password: "123456"
+    ca: ""
+    cert: ""
+    privateKey: ""
+
+transfer:
+  enable: false
+  mq:
+    url: "amqp://admin:admin@127.0.0.1:5672/"

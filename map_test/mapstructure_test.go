@@ -2,9 +2,10 @@ package map_test
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/mitchellh/mapstructure"
 	"github.com/sirupsen/logrus"
-	"testing"
 )
 
 type HDF struct {

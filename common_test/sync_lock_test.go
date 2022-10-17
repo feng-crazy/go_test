@@ -10,7 +10,8 @@ import (
 var data = make(map[string]string)
 var sm sync.Map
 var m = &hashmap.HashMap{}
-func init(){
+
+func init() {
 	data["test"] = "test1"
 	sm.Store("test", "test1")
 	m.Set("test", "test1")
@@ -39,7 +40,6 @@ func BenchmarkWithSyncMap(b *testing.B) {
 		_, _ = sm.Load("test")
 	}
 }
-
 
 func BenchmarkWithHashMap(b *testing.B) {
 	b.ReportAllocs()

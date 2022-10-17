@@ -19,22 +19,21 @@ var jsonData = []byte(`{
   "name": {"first": "Tom", "last": "Anderson"}
 }`)
 
-
 type Person struct {
-	Age int `json:"age"`
-	Children []string `json:"children"`
-	FavMovie string `json:"fav.movie"`
-	Friends []Friends `json:"friends"`
-	Name Name `json:"name"`
+	Age      int       `json:"age"`
+	Children []string  `json:"children"`
+	FavMovie string    `json:"fav.movie"`
+	Friends  []Friends `json:"friends"`
+	Name     Name      `json:"name"`
 }
 type Friends struct {
-	Age int `json:"age"`
+	Age   int    `json:"age"`
 	First string `json:"first"`
-	Last string `json:"last"`
+	Last  string `json:"last"`
 }
 type Name struct {
 	First string `json:"first"`
-	Last string `json:"last"`
+	Last  string `json:"last"`
 }
 
 func BenchmarkDecodeJsoniterPersonGetName(b *testing.B) {
@@ -48,7 +47,7 @@ func BenchmarkDecodeJsoniterPersonGetName(b *testing.B) {
 func BenchmarkDecodeGjsonStructPersonGetName(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		_ =gjson.GetBytes(jsonData, "name.last").String()
+		_ = gjson.GetBytes(jsonData, "name.last").String()
 		// fmt.Println(value)
 	}
 }

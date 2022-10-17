@@ -43,7 +43,7 @@ func TestChannel1(t *testing.T) {
 		for i := range ch {
 			fmt.Println("get v:", i)
 			count++
-			if count == 2{
+			if count == 2 {
 				// close(ch)
 				fmt.Println("exit")
 				break
@@ -57,8 +57,8 @@ func TestChannel1(t *testing.T) {
 		}
 	}
 
-	for  {
-		time.Sleep( 1 * time.Second)
+	for {
+		time.Sleep(1 * time.Second)
 	}
 }
 

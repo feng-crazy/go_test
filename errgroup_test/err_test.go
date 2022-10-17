@@ -8,7 +8,7 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-func TestErrGroup(t *testing.T){
+func TestErrGroup(t *testing.T) {
 	var g errgroup.Group
 	var urls = []string{
 		"http://www.golang.org/",

@@ -28,7 +28,7 @@ func main() {
 	}
 
 	go func() {
-		for  {
+		for {
 			data := make([]byte, 1024)
 			n, err := conn.Read(data)
 			if err != nil {
@@ -58,7 +58,5 @@ func main() {
 		}
 	}()
 
-	select {
-
-	}
+	select {}
 }

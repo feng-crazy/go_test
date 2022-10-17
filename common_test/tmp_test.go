@@ -167,7 +167,6 @@ func TestChannel(t *testing.T) {
 	}
 
 	// go recv1(ctx, ch)
-
 	time.Sleep(5 * time.Second)
 	cancel()
 }

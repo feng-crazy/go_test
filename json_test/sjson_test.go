@@ -18,11 +18,12 @@ func BenchmarkSjson(b *testing.B) {
 }
 
 var person1 = Person{
-	Name:     Name{
+	Name: Name{
 		First: "test",
 		Last:  "Anderson",
 	},
 }
+
 func BenchmarkJsoniter(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {

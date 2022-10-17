@@ -23,7 +23,6 @@ func TestChannelEqual(t *testing.T) {
 	}
 }
 
-
 func TestChannelEqual2(t *testing.T) {
 	chMap := make(map[chan int]string)
 

@@ -13,7 +13,6 @@ import (
 	"golang.org/x/text/transform"
 )
 
-
 type Root struct {
 	XMLName xml.Name `xml:"root"`
 	Ord     string   `xml:"ord,attr"`
@@ -76,7 +75,6 @@ func TestXml3(t *testing.T) {
 	}
 	logrus.Printf("UsrLoginRet : %+v", v)
 }
-
 
 func GbkToUtf8(s []byte) ([]byte, error) {
 	reader := transform.NewReader(bytes.NewReader(s), simplifiedchinese.GBK.NewDecoder())

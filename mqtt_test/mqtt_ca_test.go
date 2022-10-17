@@ -1,6 +1,5 @@
 package mqtt_client
 
-
 import (
 	"crypto/tls"
 	"crypto/x509"

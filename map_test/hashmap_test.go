@@ -7,7 +7,6 @@ import (
 	"github.com/cornelk/hashmap"
 )
 
-
 func TestHashMap(t *testing.T) {
 	m := &hashmap.HashMap{}
 	m.Set("amount", 123)
